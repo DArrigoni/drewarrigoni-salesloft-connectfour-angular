@@ -6,13 +6,13 @@ export class CFGamePage {
   }
 
   playOnColumn( column: number ) {
-    let selector = `#cf-column${column}`
+    const selector = `#cf-column${column}`;
     element(by.css(selector)).click();
   }
 
   discFor( column: number, row: number ) {
-    let selector = `#cf-column${column}-row${row}`
-    let elem = element(by.css(selector))
-    return elem.getAttribute('data-player')
+    const selector = `#cf-column${column}-row${row}`;
+    const elem = element(by.css(selector));
+    return elem.getAttribute('data-player');
   }
 }

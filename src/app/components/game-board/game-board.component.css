@@ -1,0 +1,40 @@
+#cf-game-board{
+  display: flex;
+  flex-direction: row;
+
+}
+
+#cf-game-board .cf-column {
+  display: flex;
+  flex-direction: column-reverse;
+
+  background-color: tan;
+}
+
+#cf-game-board .cf-column:hover {
+
+  background-color: yellow;
+}
+
+#cf-game-board .cf-cell {
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+
+  cursor: pointer;
+}
+
+#cf-game-board .cf-player0 {
+  color: white;
+}
+
+#cf-game-board .cf-player1 {
+  color: red;
+}
+
+#cf-game-board .cf-player2 {
+  color: black;
+}

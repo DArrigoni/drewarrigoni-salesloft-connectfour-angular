@@ -1,0 +1,16 @@
+<h2> Connect Discs! </h2>
+<div id='cf-game-board'>
+  <div
+    id='cf-column{{columnIndex + 1}}'
+    class='cf-column'
+    (click)="play(columnIndex)"
+    *ngFor="let column of gameState; let columnIndex = index">
+    <div
+      id='cf-column{{columnIndex + 1}}-row{{rowIndex + 1}}'
+      class='cf-cell cf-player{{cell}}'
+      attr.data-player={{cell}}
+      *ngFor="let cell of column; let rowIndex = index" >
+        &bull;
+    </div>
+  </div>
+</div>
