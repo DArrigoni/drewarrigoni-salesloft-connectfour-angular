@@ -163,6 +163,81 @@ describe('GameBoardComponent', () => {
       expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
     });
 
+    describe('win conditions', ()=> {
+      it('should flag a game as won if 4 are connected vertically', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 1, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+
+        gameBoardComponent.play(0);
+        fixture.detectChanges;
+
+        expect(gameBoardComponent.won).toBeTruthy();
+      });
+
+      it('should flag a game as won if 4 are connected horizontally', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+
+        gameBoardComponent.play(0);
+        fixture.detectChanges;
+
+        expect(gameBoardComponent.won).toBeTruthy();
+      });
+
+      it('should flag a game as won if 4 are connected left-to-right diagonally', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [2, 2, 2, 0, 0, 0],
+          [2, 2, 1, 0, 0, 0],
+          [2, 1, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+
+        gameBoardComponent.play(0);
+        fixture.detectChanges;
+
+        expect(gameBoardComponent.won).toBeTruthy();
+      });
+
+      it('should flag a game as won if 4 are connected right-to-left diagonally', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0],
+          [2, 1, 0, 0, 0, 0],
+          [2, 2, 1, 0, 0, 0],
+          [2, 2, 2, 0, 0, 0]
+        ]
+
+        gameBoardComponent.play(6);
+        fixture.detectChanges;
+
+        expect(gameBoardComponent.won).toBeTruthy();
+
+      });
+    });
+
     // TODO: Refactor this into game-board.component.html.spec.ts
 
     describe('Click binding', () => {
