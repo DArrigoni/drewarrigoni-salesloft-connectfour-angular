@@ -18,7 +18,9 @@ export class GameBoardComponent {
   height: Number;
 
   //TODO: Make the width/length configurable
+  //IDEA: Refactor all this state into its own object? Thin components?
   constructor() {
+
     this.gameState = [
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
@@ -38,7 +40,7 @@ export class GameBoardComponent {
   }
 
   play(column) {
-    //if(won) { return; } //Still trying to play while the game is won? Silly.
+    if(this.won) { return; } //Still trying to play while the game is won? Silly.
 
     let openIndex = this.gameState[column].indexOf(0);
     this.gameState[column][openIndex] = this.activePlayer;

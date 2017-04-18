@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { GameBoardComponent } from './game-board.component';
+import { GameStatusComponent } from '../game-status/game-status.component';
 
 describe('GameBoardComponent', () => {
   let fixture;
@@ -10,7 +11,8 @@ describe('GameBoardComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        GameBoardComponent
+        GameBoardComponent,
+        GameStatusComponent
       ]
     }).compileComponents();
 
@@ -176,11 +178,13 @@ describe('GameBoardComponent', () => {
           [0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0]
         ]
+        //Win
         gameBoardComponent.play(0);
 
+        //Extra
         gameBoardComponent.play(0);
-        fixture.detectChanges;
 
+        expect(gameBoardComponent.gameState[0][4]).toEqual(0);
       });
     });
   });
