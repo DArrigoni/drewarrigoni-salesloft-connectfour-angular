@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class GameBoardComponent {
   static readonly PLAYER1 = 1;
+  static readonly PLAYER2 = 2;
 
   gameState = [
     [0, 0, 0, 0, 0, 0],
@@ -21,6 +22,7 @@ export class GameBoardComponent {
   activePlayer = GameBoardComponent.PLAYER1;
 
   play(column) {
-    this.gameState[column][0] = this.activePlayer;
+    let openIndex = this.gameState[column].indexOf(0);
+    this.gameState[column][openIndex] = this.activePlayer;
   }
 }

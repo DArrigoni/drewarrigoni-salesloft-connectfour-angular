@@ -125,6 +125,44 @@ describe('GameBoardComponent', () => {
       expect(gameBoardComponent.gameState[3][0]).toEqual(GameBoardComponent.PLAYER1);
     });
 
+    it('should stack a disc on top of another if present', ()=> {
+      gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+      gameBoardComponent.gameState[0][0] = GameBoardComponent.PLAYER1;
+
+      gameBoardComponent.play(0);
+      fixture.detectChanges();
+
+      expect(gameBoardComponent.gameState[0][1]).toEqual(GameBoardComponent.PLAYER1);
+    });
+
+    it('should stack a disc on top of another player disc if present', ()=> {
+      gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+      gameBoardComponent.gameState[0][0] = GameBoardComponent.PLAYER2;
+
+      gameBoardComponent.play(0);
+      fixture.detectChanges();
+
+      expect(gameBoardComponent.gameState[0][1]).toEqual(GameBoardComponent.PLAYER1);
+    });
+
+    it('should not stomp on the top disc of another player', ()=> {
+      gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+      gameBoardComponent.gameState = [
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2]
+      ]
+
+      gameBoardComponent.play(0);
+      fixture.detectChanges;
+
+      expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
+    });
+
     // TODO: Refactor this into game-board.component.html.spec.ts
 
     describe('Click binding', () => {
