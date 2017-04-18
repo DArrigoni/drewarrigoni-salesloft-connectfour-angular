@@ -97,6 +97,16 @@ describe('GameBoardComponent', () => {
       expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
     });
 
+    it('should switch to the next player when played', ()=> {
+      gameBoardComponent.play(0);
+
+      expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER2);
+
+      gameBoardComponent.play(0);
+
+      expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
+    });
+
     describe('win conditions', ()=> {
       it('should flag a game as won if 4 are connected vertically', ()=> {
         gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
@@ -185,6 +195,23 @@ describe('GameBoardComponent', () => {
         gameBoardComponent.play(0);
 
         expect(gameBoardComponent.gameState[0][4]).toEqual(0);
+      });
+
+      it('should not switch players once the game is won', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 1, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+        gameBoardComponent.play(0);
+
+        expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
+
       });
     });
   });

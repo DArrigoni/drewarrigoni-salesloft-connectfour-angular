@@ -46,6 +46,13 @@ export class GameBoardComponent {
     this.gameState[column][openIndex] = this.activePlayer;
 
     this.won = this.checkWin();
+
+    if(!this.won) {
+      this.activePlayer = this.activePlayer == GameBoardComponent.PLAYER1 ?
+        GameBoardComponent.PLAYER2 :
+        GameBoardComponent.PLAYER1
+    }
+
   }
 
   private checkWin() {
