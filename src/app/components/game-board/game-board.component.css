@@ -1,7 +1,15 @@
+#cf-game-board-area {
+  display: flex;
+  flex-direction: row;
+}
+
 #cf-game-board{
   display: flex;
   flex-direction: row;
+}
 
+#cf-game-board-error {
+  color: red;
 }
 
 #cf-game-board .cf-column {

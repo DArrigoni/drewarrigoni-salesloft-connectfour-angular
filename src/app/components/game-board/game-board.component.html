@@ -1,19 +1,22 @@
 <h2> Connect Discs! </h2>
 <p>Objective: Link 4 discs either vertically, horizontally or diagonally before your opponent does!</p>
 <p>Click on a column to play a disc.</p>
-<div id='cf-game-board'>
-  <div
-    id='cf-column{{columnIndex + 1}}'
-    class='cf-column'
-    (click)="play(columnIndex)"
-    *ngFor="let column of gameState; let columnIndex = index">
+<p id='cf-game-board-error' *ngIf='error'>{{error}}</p>
+  <div id='cf-game-board-area'>
+  <div id='cf-game-board'>
     <div
-      id='cf-column{{columnIndex + 1}}-row{{rowIndex + 1}}'
-      class='cf-cell cf-player{{cell}}'
-      attr.data-player={{cell}}
-      *ngFor="let cell of column; let rowIndex = index" >
-        &bull;
+      id='cf-column{{columnIndex + 1}}'
+      class='cf-column'
+      (click)="play(columnIndex)"
+      *ngFor="let column of gameState; let columnIndex = index">
+      <div
+        id='cf-column{{columnIndex + 1}}-row{{rowIndex + 1}}'
+        class='cf-cell cf-player{{cell}}'
+        attr.data-player={{cell}}
+        *ngFor="let cell of column; let rowIndex = index" >
+          &bull;
+      </div>
     </div>
   </div>
+  <game-status [active-player]='activePlayer' [won]='won' (resetEvent)='reset()'></game-status>
 </div>
-<game-status [active-player]='activePlayer' [won]='won'></game-status>

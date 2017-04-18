@@ -22,4 +22,16 @@ describe('GameStatusComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('reset', ()=> {
+    it('should emit a reset event on the resetEvent emitter', (done)=> {
+      component.resetEvent.subscribe((event)=> {
+        expect(event).toEqual('reset');
+        done();
+      });
+
+      component.reset();
+    });
+  });
+
 });

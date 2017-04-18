@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'game-status',
@@ -8,4 +8,10 @@ import { Component, Input } from '@angular/core';
 export class GameStatusComponent {
   @Input('active-player') activePlayer: Number;
   @Input('won') won: Boolean;
+
+  @Output() resetEvent: EventEmitter<String> = new EventEmitter<String>()
+
+  reset() {
+    this.resetEvent.emit('reset');
+  }
 }

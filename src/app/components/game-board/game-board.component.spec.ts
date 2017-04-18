@@ -1,12 +1,11 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
 import { GameBoardComponent } from './game-board.component';
 import { GameStatusComponent } from '../game-status/game-status.component';
 
 describe('GameBoardComponent', () => {
-  let fixture;
-  let gameBoardComponent;
-  let gameBoardView;
+  let fixture: ComponentFixture<GameBoardComponent>;
+  let gameBoardComponent: GameBoardComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -80,23 +79,6 @@ describe('GameBoardComponent', () => {
       expect(gameBoardComponent.gameState[0][1]).toEqual(GameBoardComponent.PLAYER1);
     });
 
-    it('should not stomp on the top disc of another player', ()=> {
-      gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
-      gameBoardComponent.gameState = [
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2]
-      ]
-
-      gameBoardComponent.play(0);
-
-      expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
-    });
-
     it('should switch to the next player when played', ()=> {
       gameBoardComponent.play(0);
 
@@ -105,6 +87,43 @@ describe('GameBoardComponent', () => {
       gameBoardComponent.play(0);
 
       expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
+    });
+
+    it('should clear any pre-existing error message', ()=> {
+      gameBoardComponent.error = 'Bad stuff!';
+
+      gameBoardComponent.play(0);
+
+      expect(gameBoardComponent.error).toBeNull();
+    })
+
+    describe('Invalid move', ()=> {
+      beforeEach(()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2],
+          [2, 2, 2, 2, 2, 2]
+        ]
+
+        gameBoardComponent.play(0);
+      });
+
+      it('should not stomp on the top disc of another player', ()=> {
+        expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
+      });
+
+      it('should not change the player if you try to play on a column that is full', ()=> {
+        expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
+      });
+
+      it('should set an error message', ()=> {
+        expect(gameBoardComponent.error).toEqual('Cannot play disc in full column.');
+      });
     });
 
     describe('win conditions', ()=> {
@@ -213,6 +232,48 @@ describe('GameBoardComponent', () => {
         expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
 
       });
+    });
+  });
+
+  describe('.reset()', ()=> {
+    it('should reset the game state', ()=> {
+      gameBoardComponent.gameState = [
+        [1, 1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+      ]
+
+      gameBoardComponent.reset();
+
+      expect(gameBoardComponent.gameState).toEqual([
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+      ])
+    });
+
+    it('should reset the active player', ()=> {
+      gameBoardComponent.activePlayer = GameBoardComponent.PLAYER2;
+
+      gameBoardComponent.reset();
+
+      expect(gameBoardComponent.activePlayer).toEqual(GameBoardComponent.PLAYER1);
+    });
+
+    it('should reset the won state', ()=> {
+      gameBoardComponent.won = true;
+
+      gameBoardComponent.reset();
+
+      expect(gameBoardComponent.won).toEqual(false);
     });
   });
 });

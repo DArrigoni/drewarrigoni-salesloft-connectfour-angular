@@ -12,6 +12,7 @@ export class GameBoardComponent {
   gameState: Number[][];
   activePlayer: Number;
   won: Boolean;
+  error: String;
 
   minWinLength: Number;
   width: Number;
@@ -20,7 +21,35 @@ export class GameBoardComponent {
   //TODO: Make the width/length configurable
   //IDEA: Refactor all this state into its own object? Thin components?
   constructor() {
+    this.reset()
 
+    this.minWinLength = 4;
+    this.width = this.gameState.length;
+    this.height = this.gameState[0].length;
+  }
+
+  play(column) {
+    if(this.won) { return; } //Still trying to play while the game is won? Silly.
+
+    let openIndex = this.gameState[column].indexOf(0);
+    if(openIndex >= 0) {
+      this.error = null;
+
+      this.gameState[column][openIndex] = this.activePlayer;
+
+      this.won = this.checkWin();
+
+      if(!this.won) {
+        this.activePlayer = this.activePlayer == GameBoardComponent.PLAYER1 ?
+          GameBoardComponent.PLAYER2 :
+          GameBoardComponent.PLAYER1
+      }
+    } else {
+      this.error = 'Cannot play disc in full column.';
+    }
+  }
+
+  reset() {
     this.gameState = [
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
@@ -33,28 +62,9 @@ export class GameBoardComponent {
 
     this.activePlayer = GameBoardComponent.PLAYER1;
     this.won = false;
-
-    this.minWinLength = 4;
-    this.width = this.gameState.length;
-    this.height = this.gameState[0].length;
   }
 
-  play(column) {
-    if(this.won) { return; } //Still trying to play while the game is won? Silly.
-
-    let openIndex = this.gameState[column].indexOf(0);
-    this.gameState[column][openIndex] = this.activePlayer;
-
-    this.won = this.checkWin();
-
-    if(!this.won) {
-      this.activePlayer = this.activePlayer == GameBoardComponent.PLAYER1 ?
-        GameBoardComponent.PLAYER2 :
-        GameBoardComponent.PLAYER1
-    }
-
-  }
-
+  //IDEA: Extract all this win condition code into a service object? Thin components?
   private checkWin() {
     let playerWinString = Array(this.minWinLength).fill(this.activePlayer).join('');
 

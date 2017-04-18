@@ -106,6 +106,23 @@ describe('GameBoardComponent View', () => {
       expect(elem).toBeTruthy();
       expect(Number(elem.attributes['data-player'])).toEqual(2);
     });
+
+    it('should not render an error message', ()=> {
+      const elem = findByCss('#cf-game-board-error');
+
+      expect(elem).toBeNull();
+    })
+
+    describe('with errors', ()=> {
+      it('should not render an error message', ()=> {
+        gameBoardComponent.error = 'Bad stuff!';
+        fixture.detectChanges();
+
+        const elem = findByCss('#cf-game-board-error');
+
+        expect(elem.nativeElement.textContent).toEqual('Bad stuff!');
+      })
+    });
   });
 
   describe('Click binding', () => {
