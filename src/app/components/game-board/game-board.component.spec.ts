@@ -56,7 +56,6 @@ describe('GameBoardComponent', () => {
       gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
 
       gameBoardComponent.play(3);
-      fixture.detectChanges();
 
       expect(gameBoardComponent.gameState[3][0]).toEqual(GameBoardComponent.PLAYER1);
     });
@@ -66,7 +65,6 @@ describe('GameBoardComponent', () => {
       gameBoardComponent.gameState[0][0] = GameBoardComponent.PLAYER1;
 
       gameBoardComponent.play(0);
-      fixture.detectChanges();
 
       expect(gameBoardComponent.gameState[0][1]).toEqual(GameBoardComponent.PLAYER1);
     });
@@ -76,7 +74,6 @@ describe('GameBoardComponent', () => {
       gameBoardComponent.gameState[0][0] = GameBoardComponent.PLAYER2;
 
       gameBoardComponent.play(0);
-      fixture.detectChanges();
 
       expect(gameBoardComponent.gameState[0][1]).toEqual(GameBoardComponent.PLAYER1);
     });
@@ -94,7 +91,6 @@ describe('GameBoardComponent', () => {
       ]
 
       gameBoardComponent.play(0);
-      fixture.detectChanges;
 
       expect(gameBoardComponent.gameState[0][5]).toEqual(GameBoardComponent.PLAYER2);
     });
@@ -113,7 +109,6 @@ describe('GameBoardComponent', () => {
         ]
 
         gameBoardComponent.play(0);
-        fixture.detectChanges;
 
         expect(gameBoardComponent.won).toBeTruthy();
       });
@@ -131,7 +126,6 @@ describe('GameBoardComponent', () => {
         ]
 
         gameBoardComponent.play(0);
-        fixture.detectChanges;
 
         expect(gameBoardComponent.won).toBeTruthy();
       });
@@ -149,7 +143,6 @@ describe('GameBoardComponent', () => {
         ]
 
         gameBoardComponent.play(0);
-        fixture.detectChanges;
 
         expect(gameBoardComponent.won).toBeTruthy();
       });
@@ -167,9 +160,26 @@ describe('GameBoardComponent', () => {
         ]
 
         gameBoardComponent.play(6);
-        fixture.detectChanges;
 
         expect(gameBoardComponent.won).toBeTruthy();
+
+      });
+
+      it('should not continue playing once the game is won', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 1, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+        gameBoardComponent.play(0);
+
+        gameBoardComponent.play(0);
+        fixture.detectChanges;
 
       });
     });
