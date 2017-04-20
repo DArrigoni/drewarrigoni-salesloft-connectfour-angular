@@ -30,7 +30,7 @@ export class GameBoardComponent {
   }
 
   play(column) {
-    if(this.won) { return; } //Still trying to play while the game is won? Silly.
+    if(this.won || this.draw) { return; }
 
     let openIndex = this.gameState[column].indexOf(0);
     if(openIndex >= 0) {

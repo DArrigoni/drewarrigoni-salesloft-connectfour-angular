@@ -267,6 +267,27 @@ describe('GameBoardComponent', () => {
         expect(gameBoardComponent.won).toEqual(true);
         expect(gameBoardComponent.draw).toEqual(false);
       });
+
+      it('should not continue playing once the game is drawn', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 2, 1, 2, 1, 0],
+          [1, 2, 1, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1],
+          [2, 1, 2, 1, 2, 1],
+          [1, 2, 1, 2, 1, 2],
+          [1, 2, 1, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1]
+        ]
+        //Draw
+        gameBoardComponent.play(0);
+
+        //Extra
+        gameBoardComponent.play(0);
+
+        expect(gameBoardComponent.error).toBeNull();
+      });
+
     });
   });
 
