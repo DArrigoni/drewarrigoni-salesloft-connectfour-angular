@@ -5,11 +5,11 @@ import { GameBoardComponent } from './components/game-board/game-board.component
 import { GameStatusComponent } from './components/game-status/game-status.component';
 
 describe('AppComponent', () => {
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AppComponent, GameBoardComponent, GameStatusComponent ],
     }).compileComponents();
-  });
+  }));
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

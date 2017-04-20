@@ -1,9 +1,14 @@
 <div id='cf-game-status'>
-  <p id='cf-game-status-active-player' *ngIf='!won'>
+  <p id='cf-game-status-active-player' *ngIf='!won && !draw'>
     Active Player: {{activePlayer}}
   </p>
   <p id='cf-game-status-win' *ngIf='won'>
     <em>Player {{activePlayer}} wins!</em>
+
+    <button (click)='reset()' > Play again </button>
+  </p>
+  <p id='cf-game-status-draw' *ngIf='draw'>
+    <em>Draw game!</em>
 
     <button (click)='reset()' > Play again </button>
   </p>

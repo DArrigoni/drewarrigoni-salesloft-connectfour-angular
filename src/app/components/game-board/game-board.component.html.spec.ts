@@ -6,13 +6,14 @@ import { MockComponent } from 'ng2-mock-component'
 import { GameBoardComponent } from './game-board.component';
 
 describe('GameBoardComponent View', () => {
+  //TODO: Be a good typescripter and type-ify these
   let fixture;
   let debugElement;
   let gameBoardComponent;
 
-  let MockGameStatus = MockComponent({ selector: 'game-status', inputs: ['active-player', 'won'] });
+  let MockGameStatus = MockComponent({ selector: 'game-status', inputs: ['active-player', 'won', 'draw'] });
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         GameBoardComponent,
@@ -21,12 +22,12 @@ describe('GameBoardComponent View', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(GameBoardComponent);
-    fixture.autoDetectChanges();
 
     debugElement = fixture.debugElement;
 
     gameBoardComponent = debugElement.componentInstance;
-  })
+    fixture.detectChanges();
+  }));
 
   let findByCss = (selector)=> { return debugElement.query(By.css(selector)) }
   let findAllByCss = (selector)=> { return debugElement.queryAll(By.css(selector)) }
@@ -128,6 +129,8 @@ describe('GameBoardComponent View', () => {
   describe('Click binding', () => {
     it('should fill in the bottom row for the column clicked', () => {
       debugElement.query(By.css('#cf-column4')).nativeElement.click();
+
+      fixture.detectChanges();
 
       expectCssToBePresent('#cf-column4-row1.cf-player1');
     });

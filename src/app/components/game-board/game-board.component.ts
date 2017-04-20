@@ -12,6 +12,7 @@ export class GameBoardComponent {
   gameState: Number[][];
   activePlayer: Number;
   won: Boolean;
+  draw: Boolean;
   error: String;
 
   minWinLength: Number;
@@ -40,6 +41,7 @@ export class GameBoardComponent {
       this.won = this.checkWin();
 
       if(!this.won) {
+        this.draw = this.checkDraw();
         this.activePlayer = this.activePlayer == GameBoardComponent.PLAYER1 ?
           GameBoardComponent.PLAYER2 :
           GameBoardComponent.PLAYER1
@@ -62,6 +64,7 @@ export class GameBoardComponent {
 
     this.activePlayer = GameBoardComponent.PLAYER1;
     this.won = false;
+    this.draw = false;
   }
 
   //IDEA: Extract all this win condition code into a service object? Thin components?
@@ -81,6 +84,14 @@ export class GameBoardComponent {
       .concat(rtlDiagonalStrings);
 
     if(this.checkForWinString(possibleWinStrings)) { return true; }
+  }
+
+  private checkDraw() {
+    let emptySpotRemains = this.gameState.some((column)=> {
+      return column.some((cell) => { return cell == 0; });
+    })
+
+    return !emptySpotRemains;
   }
 
   private checkForWinString(checkStrings) {

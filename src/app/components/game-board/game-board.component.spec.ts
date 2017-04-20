@@ -7,7 +7,7 @@ describe('GameBoardComponent', () => {
   let fixture: ComponentFixture<GameBoardComponent>;
   let gameBoardComponent: GameBoardComponent;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         GameBoardComponent,
@@ -17,7 +17,7 @@ describe('GameBoardComponent', () => {
 
     fixture = TestBed.createComponent(GameBoardComponent);
     gameBoardComponent = fixture.debugElement.componentInstance;
-  });
+  }));
 
   //IDEA: Get these magic 7 columns and 6 row numbers out to build generic game boards
 
@@ -233,6 +233,41 @@ describe('GameBoardComponent', () => {
 
       });
     });
+
+    describe('draw conditions', ()=> {
+      it('should be a draw if you fill every space', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 2, 1, 2, 1, 0],
+          [1, 2, 1, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1],
+          [2, 1, 2, 1, 2, 1],
+          [1, 2, 1, 2, 1, 2],
+          [1, 2, 1, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1]
+        ]
+        gameBoardComponent.play(0);
+
+        expect(gameBoardComponent.draw).toEqual(true);
+      });
+
+      it('should not be a draw if every spot is filled but there is a winner', ()=> {
+        gameBoardComponent.activePlayer = GameBoardComponent.PLAYER1;
+        gameBoardComponent.gameState = [
+          [1, 2, 1, 1, 1, 0],
+          [1, 2, 2, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1],
+          [2, 1, 2, 1, 2, 1],
+          [1, 2, 1, 2, 1, 2],
+          [1, 2, 1, 2, 1, 2],
+          [2, 1, 2, 1, 2, 1]
+        ]
+        gameBoardComponent.play(0);
+
+        expect(gameBoardComponent.won).toEqual(true);
+        expect(gameBoardComponent.draw).toEqual(false);
+      });
+    });
   });
 
   describe('.reset()', ()=> {
@@ -274,6 +309,15 @@ describe('GameBoardComponent', () => {
       gameBoardComponent.reset();
 
       expect(gameBoardComponent.won).toEqual(false);
+    });
+
+    it('should reset the draw state', ()=> {
+      gameBoardComponent.draw = true;
+
+      gameBoardComponent.reset();
+
+      expect(gameBoardComponent.draw).toEqual(false);
+
     });
   });
 });
