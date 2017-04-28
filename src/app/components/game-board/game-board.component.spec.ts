@@ -1,17 +1,29 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 
 import { GameBoardComponent } from './game-board.component';
 import { GameStatusComponent } from '../game-status/game-status.component';
+import { AiService } from '../../services/ai.service';
 
 describe('GameBoardComponent', () => {
   let fixture: ComponentFixture<GameBoardComponent>;
   let gameBoardComponent: GameBoardComponent;
+
+  const aiResponseColumn = 2;
+
+  const stubAiService = {
+    random: (gameState, activePlayer) => {
+      return Promise.resolve(aiResponseColumn)
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         GameBoardComponent,
         GameStatusComponent
+      ],
+      providers: [
+        { provide: AiService, useValue: stubAiService }
       ]
     }).compileComponents();
 
@@ -340,5 +352,17 @@ describe('GameBoardComponent', () => {
       expect(gameBoardComponent.draw).toEqual(false);
 
     });
+  });
+
+  describe('.playRandom', () => {
+    it('should call play with the correct value', fakeAsync(() => {
+      spyOn(gameBoardComponent, 'play');
+
+      gameBoardComponent.playRandom();
+
+      tick();
+
+      expect(gameBoardComponent.play).toHaveBeenCalledWith(aiResponseColumn);
+    }));
   });
 });

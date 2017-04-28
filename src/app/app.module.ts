@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
 import { GameStatusComponent } from './components/game-status/game-status.component';
+import { AiService } from './services/ai.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { GameStatusComponent } from './components/game-status/game-status.compon
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [AiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

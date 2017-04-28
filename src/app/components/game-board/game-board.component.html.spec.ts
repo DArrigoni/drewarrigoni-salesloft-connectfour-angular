@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { MockComponent } from 'ng2-mock-component'
 
 import { GameBoardComponent } from './game-board.component';
+import { AiService } from '../../services/ai.service';
 
 describe('GameBoardComponent View', () => {
   //TODO: Be a good typescripter and type-ify these
@@ -18,6 +19,9 @@ describe('GameBoardComponent View', () => {
       declarations: [
         GameBoardComponent,
         MockGameStatus
+      ],
+      providers: [
+        { provide: AiService, useValue: null }
       ]
     }).compileComponents();
 
@@ -133,6 +137,16 @@ describe('GameBoardComponent View', () => {
       fixture.detectChanges();
 
       expectCssToBePresent('#cf-column4-row1.cf-player1');
+    });
+
+    it('should call playRandom if the random button is pressed', ()=> {
+      spyOn(gameBoardComponent, 'playRandom');
+
+      debugElement.query(By.css('#cf-game-board-ai-random')).nativeElement.click();
+
+      fixture.detectChanges();
+
+      expect(gameBoardComponent.playRandom).toHaveBeenCalled();
     });
   });
 });

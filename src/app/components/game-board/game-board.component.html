@@ -17,6 +17,9 @@
           &bull;
       </div>
     </div>
+    <div id='cf-game-board-ai'>
+      <button id='cf-game-board-ai-random' (click)='playRandom()'>Random</button>
+    </div>
   </div>
   <game-status [active-player]='activePlayer' [won]='won' [draw]='draw' (resetEvent)='reset()'></game-status>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AiService } from '../../services/ai.service';
 
 @Component({
   selector: 'game-board',
@@ -21,7 +22,7 @@ export class GameBoardComponent {
 
   //TODO: Make the width/length configurable
   //IDEA: Refactor all this state into its own object? Thin components?
-  constructor() {
+  constructor(private aiService: AiService) {
     this.reset()
 
     this.minWinLength = 4;
@@ -65,6 +66,12 @@ export class GameBoardComponent {
     this.activePlayer = GameBoardComponent.PLAYER1;
     this.won = false;
     this.draw = false;
+  }
+
+  playRandom() {
+    this.aiService.random(this.gameState, this.activePlayer).then((colToPlay)=> {
+      this.play(colToPlay);
+    });
   }
 
   //IDEA: Extract all this win condition code into a service object? Thin components?
